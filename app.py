@@ -20,14 +20,11 @@ from flask_bcrypt import check_password_hash, generate_password_hash
 
 import math
 from pymongo import MongoClient
-import pwds
 from flask_mail import Mail, Message
 from datetime import datetime, date, timedelta
-
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
+
 
 app = Flask(__name__)
 
