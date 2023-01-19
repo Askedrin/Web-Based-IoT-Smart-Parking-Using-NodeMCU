@@ -28,17 +28,23 @@ import os
 
 app = Flask(__name__)
 
-# mongodb://localhost:27017/IOT
+
 # Connection to the database
 try:
     connect(host="mongodb://localhost:27017/IOT")
     print("Connection with success")
+    # If you want to create a user just uncomment the bellow lines
+    # c = Clients(first_name="mohcen",
+    #     last_name="moh",
+    #     email="email@mail.com",
+    #     password="pass123")
+    # c.save()
 
 except Exception as ex:
     print(ex)
 
 try:
-    con = MongoClient('mongodb://localhost:27017/')
+    con = MongoClient('mongodb://localhost:27017/IOT')
     print("pymongo connected")
 except Exception as ex:
     print(ex)
@@ -47,7 +53,6 @@ except Exception as ex:
 IMGBB_API_KEY = os.getenv("IMGBB_API_KEY")
 app.secret_key = "testing"
 app.config['SECRET_KEY'] = 'testing'
-
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'Your Gmail Address'
@@ -109,7 +114,7 @@ def user(id):
             c = Clients.objects.get(id=id)
             l = Logs.objects(client=id)
             p = Payments.objects(client=id)
-            r=RFID.objects.get(client=id)
+            r=RFID.objects(client=id)
             used_lots = RFID.objects(is_used=True).count()
             parking_times = Logs.objects(client=id).count()
 
